@@ -2,36 +2,29 @@
 import QtQuick 1.1
 
 Rectangle {
+
     id: main
     width: 360
     height: 360
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
-    }
 
-    Rectangle {
+    Car {
         id: firstCar
         color: "red"
-        width: parent.width / 8; height: parent.height / 8;
     }
 
-    Rectangle {
+    Car {
         id: secondCar
         color: "green"
-        width: parent.width / 8; height: parent.height / 8;
     }
 
-    Rectangle {
+    Car {
         id: thirdCar
         color: "yellow"
-        width: parent.width / 8; height: parent.height / 8;
     }
 
-    Rectangle {
+    Car {
         id: fourthCar
         color: "grey"
-        width: parent.width / 8; height: parent.height / 8;
     }
 
     Rectangle {
@@ -41,5 +34,11 @@ Rectangle {
         height: parent.height / 6
         anchors.bottom: parent.bottom
         x: parent.width / 2 - width / 2
+    }
+
+    SequentialAnimation {
+        running: true
+        loops: Animation.Infinite
+        NumberAnimation { targets: [firstCar, secondCar, thirdCar, fourthCar]; properties: "newY"; to: main.height; duration: 4000 }
     }
 }
