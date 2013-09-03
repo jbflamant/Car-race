@@ -7,6 +7,8 @@ Rectangle {
     property int offsetX: Math.random() * ( parent.width - 2 * parent.height / 16 - width ) + parent.height / 16
     property int offsetY: parent.height / 16
 
+    property real pente: 0
+
     width: parent.width / 8
     height: parent.height / 8
     y: offsetY + newY
@@ -15,7 +17,7 @@ Rectangle {
     onYChanged:
         if (x < (parent.width / 2)) {
 //            x--;
-            x = (y - offsetX) * offsetX / ( offsetY - offsetX)
+            x = (y - parent.height) * offsetX / ( offsetY - parent.height)
         }
         else {
             x++;
