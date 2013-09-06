@@ -38,8 +38,8 @@ Rectangle {
     property int endY: height
 
     id: main
-    width: 360
-    height: 360
+    width: 800
+    height: 480
 
     Car {
         id: firstCar
@@ -50,6 +50,7 @@ Rectangle {
         offsetEndX2: endX2
         offsetStartY: startY
         offsetEndY: endY
+        carWidth: drivenCar.width
     }
 
     Rectangle {
@@ -59,6 +60,11 @@ Rectangle {
         height: parent.height / 6
         anchors.bottom: parent.bottom
         x: parent.width / 2 - width / 2
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: firstCar.move();
     }
 
 //    SequentialAnimation {
