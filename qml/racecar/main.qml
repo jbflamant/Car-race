@@ -3,6 +3,12 @@ import QtQuick 1.1
 
 Rectangle {
 
+    property int startX: width / 16
+    property int endX: width - width / 16
+
+    property int startY: height / 16
+    property int endY: height
+
     id: main
     width: 360
     height: 360
@@ -10,21 +16,37 @@ Rectangle {
     Car {
         id: firstCar
         color: "red"
+        offsetStartXY1: startX
+        offsetEndXY1: endX
+        offsetStartY: startY
+        offsetEndY: endY
     }
 
     Car {
         id: secondCar
         color: "green"
+        offsetStartXY1: startX
+        offsetEndXY1: endX
+        offsetStartY: startY
+        offsetEndY: endY
     }
 
     Car {
         id: thirdCar
         color: "yellow"
+        offsetStartXY1: startX
+        offsetEndXY1: endX
+        offsetStartY: startY
+        offsetEndY: endY
     }
 
     Car {
         id: fourthCar
         color: "grey"
+        offsetStartXY1: startX
+        offsetEndXY1: endX
+        offsetStartY: startY
+        offsetEndY: endY
     }
 
     Rectangle {
@@ -36,9 +58,9 @@ Rectangle {
         x: parent.width / 2 - width / 2
     }
 
-    SequentialAnimation {
-        running: true
-        loops: Animation.Infinite
-        NumberAnimation { targets: [firstCar, secondCar, thirdCar, fourthCar]; properties: "newY"; to: main.height; duration: 4000 }
-    }
+//    SequentialAnimation {
+//        running: true
+//        loops: Animation.Infinite
+//        NumberAnimation { targets: [firstCar, secondCar, thirdCar, fourthCar]; properties: "newY"; to: main.height; duration: 4000 }
+//    }
 }
