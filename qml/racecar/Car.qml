@@ -2,9 +2,9 @@ import QtQuick 1.1
 
 Rectangle {
 
-    //offsetStartXY1
+    //offsetStartX1
     //----------->
-    //offsetEndXY1
+    //offsetEndX1
     //-------------------------------->
     //offsetStartY                                      offsetEndY
     //   |                                                  |
@@ -22,34 +22,41 @@ Rectangle {
     //     *                                     *         \ /
     //      <------------------------------------>
     //                      delta2
-    //offsetStartXY2
+    //offsetStartX2
     //-->
-    //offsetEndXY2
+    //offsetEndX2
     //----------------------------------------->
 
-    property int offsetStartXY1: 0
-    property int offsetEndXY1: 0
+    id: car
 
-    property int offsetStartXY2: 0
-    property int offsetEndXY2: 0
+    property int offsetStartX1: 0
+    property int offsetEndX1: 0
+
+    property int offsetStartX2: 0
+    property int offsetEndX2: 0
 
     property int offsetStartY: 0
     property int offsetEndY: 0
 
-    property int delta1: offsetEndXY1 - offsetStartXY1
-    property int delta2: offsetEndXY2 - offsetStartXY2
+    property int delta1: offsetEndX1 - offsetStartX1
+    property int delta2: offsetEndX2 - offsetStartX2
+
+    property bool isMoving: false
 
     width: parent.width / 8
     height: parent.height / 8
     y: offsetStartY
-    x: (delta1 - width) * Math.random() + offsetStartXY1
+    x: (delta1 - width) * Math.random() + offsetStartX1
 
-//    onYChanged:
-//        if (x < (parent.width / 2)) {
-////            x--;
-//            x = (y - parent.height) * offsetX / ( offsetY - parent.height)
-//        }
-//        else {
-//            x++;
-//        }
+    function move() {
+        isMoving = true;
+    }
+
+    ParallelAnimation {
+        running: isMoving
+        loops: 1
+        NumberAnimation { target: car; properties: 'x'; to: offsetEndX2; duration: 1000 }
+        NumberAnimation { target: car; properties: 'y'; to: offsetEndY; duration: 1000 }
+    }
+
 }
