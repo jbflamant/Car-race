@@ -39,8 +39,8 @@ Rectangle {
 
     property int drivenCarMove : 20
 
-    property int endLeft: width - background.width
-    property int endRight: 0
+    property int stopLeft: width - background.width
+    property int stopRight: 0
 
     id: main
     width: 800
@@ -52,47 +52,49 @@ Rectangle {
         width: parent.width + 200; height: parent.height
         x: -100
         focus: true
+
         Keys.onLeftPressed: {
             var nextMove = x - drivenCarMove;
-            if(nextMove >= endLeft) {
+            if(nextMove >= stopLeft) {
                 x = x - drivenCarMove
                 firstCar.x = firstCar.x + drivenCarMove
             }
-            else if (x == endLeft) {
+            else if (x == stopLeft) {
                 //Nothing to do
             }
-            else if (nextMove < endLeft ) {
-                x = endLeft;
-                firstCar.x = firstCar.x + (endLeft - nextMove)
+            else if (nextMove < stopLeft ) {
+                x = stopLeft;
+                firstCar.x = firstCar.x + (stopLeft - nextMove)
             }
             console.log(x)
         }
         Keys.onRightPressed: {
             var nextMove = x + drivenCarMove;
-            if(nextMove <= endRight) {
+            if(nextMove <= stopRight) {
                 x = x + drivenCarMove
                 firstCar.x = firstCar.x - drivenCarMove
             }
-            else if (x == endRight) {
+            else if (x == stopRight) {
                 //Nothing to do
             }
-            else if (nextMove > endRight ) {
-                x = endRight;
-                firstCar.x = firstCar.x - (nextMove - endRight)
+            else if (nextMove > stopRight ) {
+                x = stopRight;
+                firstCar.x = firstCar.x - (nextMove - stopRight)
             }
             console.log(x)
         }
-        Car {
-            id: firstCar
-            color: "red"
-            offsetStartX1: startX1
-            offsetEndX1: endX1
-            offsetStartX2: startX2
-            offsetEndX2: endX2
-            offsetStartY: startY
-            offsetEndY: endY
-            carWidth: drivenCar.width
-        }
+    }
+
+    Car {
+        id: firstCar
+        color: "red"
+        offsetStartX1: startX1
+        offsetEndX1: endX1
+        offsetStartX2: startX2
+        offsetEndX2: endX2
+        offsetStartY: startY
+        offsetEndY: endY
+        carWidth: drivenCar.width
     }
 
     Rectangle {
