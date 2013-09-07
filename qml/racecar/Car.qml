@@ -59,8 +59,6 @@ Rectangle {
         var roadCenter = delta2 / 2 + offsetStartX2;
         var carCenter = x + width / 2;
 
-        console.log(ratio);
-
         if(carCenter < roadCenter) {
             xPrime = delta2 / 2 + offsetStartX2 - ((delta1 / 2 + offsetStartX1) - x)  / ratio;
         }
@@ -72,7 +70,6 @@ Rectangle {
         }
 
         yPrime= offsetEndY;
-        console.log(xPrime);
         isMoving = true;
     }
 

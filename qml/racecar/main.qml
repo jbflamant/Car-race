@@ -37,9 +37,20 @@ Rectangle {
     property int startY: height / 16
     property int endY: height
 
+    property int drivenCarMove : 20
+
     id: main
     width: 800
     height: 480
+
+    Rectangle {
+        id: background
+        color: "black"
+        width: parent.width; height: parent.height
+        focus: true
+        Keys.onLeftPressed: { x = x - drivenCarMove }
+        Keys.onRightPressed: { x = x + drivenCarMove }
+    }
 
     Car {
         id: firstCar
