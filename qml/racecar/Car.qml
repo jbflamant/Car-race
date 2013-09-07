@@ -73,6 +73,10 @@ Rectangle {
         isMoving = true;
     }
 
+    function stop() {
+        isMoving = false;
+    }
+
     ParallelAnimation {
         running: isMoving
         loops: 1
