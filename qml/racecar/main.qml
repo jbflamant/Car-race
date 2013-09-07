@@ -56,7 +56,7 @@ Rectangle {
     }
 
     Car {
-        id: firstCar
+        id: car
         color: "red"
         offsetStartX1: startX1
         offsetEndX1: endX1
@@ -89,20 +89,20 @@ Rectangle {
         if(nextMove >= stopLeft) {
             background.x = background.x - drivenCarMove
 
-            firstCar.stop()
-            firstCar.x = firstCar.x + drivenCarMove
-            firstCar.xPrime = firstCar.xPrime + drivenCarMove
-            firstCar.move()
+            car.stop()
+            car.x = car.x + drivenCarMove
+            car.xPrime = car.xPrime + drivenCarMove
+            car.move()
         }
         else if (background.x == stopLeft) {
             //Nothing to do
         }
         else if (nextMove < stopLeft ) {
             background.x = stopLeft;
-            firstCar.stop()
-            firstCar.x = firstCar.x + (stopLeft - nextMove)
-            firstCar.xPrime = firstCar.xPrime + (stopLeft - nextMove)
-            firstCar.move()
+            car.stop()
+            car.x = car.x + (stopLeft - nextMove)
+            car.xPrime = car.xPrime + (stopLeft - nextMove)
+            car.move()
         }
         console.log(background.x)
     }
@@ -111,27 +111,27 @@ Rectangle {
         var nextMove = background.x + drivenCarMove;
         if(nextMove <= stopRight) {
             background.x = background.x + drivenCarMove
-            firstCar.stop()
-            firstCar.x = firstCar.x - drivenCarMove
-            firstCar.xPrime = firstCar.xPrime - drivenCarMove
-            firstCar.move()
+            car.stop()
+            car.x = car.x - drivenCarMove
+            car.xPrime = car.xPrime - drivenCarMove
+            car.move()
         }
         else if (background.x == stopRight) {
             //Nothing to do
         }
         else if (nextMove > stopRight ) {
             background.x = stopRight;
-            firstCar.stop()
-            firstCar.x = firstCar.x - (nextMove - stopRight)
-            firstCar.xPrime = firstCar.xPrime - (nextMove - stopRight)
-            firstCar.move()
+            car.stop()
+            car.x = car.x - (nextMove - stopRight)
+            car.xPrime = car.xPrime - (nextMove - stopRight)
+            car.move()
         }
         console.log(background.x)
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: firstCar.move();
+        onClicked: car.move();
     }
 
 
