@@ -53,36 +53,6 @@ Rectangle {
         x: -100
         focus: true
 
-        Keys.onLeftPressed: {
-            var nextMove = x - drivenCarMove;
-            if(nextMove >= stopLeft) {
-                x = x - drivenCarMove
-                firstCar.x = firstCar.x + drivenCarMove
-            }
-            else if (x == stopLeft) {
-                //Nothing to do
-            }
-            else if (nextMove < stopLeft ) {
-                x = stopLeft;
-                firstCar.x = firstCar.x + (stopLeft - nextMove)
-            }
-            console.log(x)
-        }
-        Keys.onRightPressed: {
-            var nextMove = x + drivenCarMove;
-            if(nextMove <= stopRight) {
-                x = x + drivenCarMove
-                firstCar.x = firstCar.x - drivenCarMove
-            }
-            else if (x == stopRight) {
-                //Nothing to do
-            }
-            else if (nextMove > stopRight ) {
-                x = stopRight;
-                firstCar.x = firstCar.x - (nextMove - stopRight)
-            }
-            console.log(x)
-        }
     }
 
     Car {
@@ -107,8 +77,62 @@ Rectangle {
         radius: width / 2
     }
 
+ //*******************************************//
+ //                                           //
+ //         MOVEMENT MANAGEMENT SECTION       //
+ //                                           //
+ //                                           //
+ //*******************************************//
+
+    Keys.onLeftPressed: {
+        var nextMove = background.x - drivenCarMove;
+        if(nextMove >= stopLeft) {
+            background.x = background.x - drivenCarMove
+
+            firstCar.stop()
+            firstCar.x = firstCar.x + drivenCarMove
+            firstCar.xPrime = firstCar.xPrime + drivenCarMove
+            firstCar.move()
+        }
+        else if (background.x == stopLeft) {
+            //Nothing to do
+        }
+        else if (nextMove < stopLeft ) {
+            background.x = stopLeft;
+            firstCar.stop()
+            firstCar.x = firstCar.x + (stopLeft - nextMove)
+            firstCar.xPrime = firstCar.xPrime + (stopLeft - nextMove)
+            firstCar.move()
+        }
+        console.log(background.x)
+    }
+
+    Keys.onRightPressed: {
+        var nextMove = background.x + drivenCarMove;
+        if(nextMove <= stopRight) {
+            background.x = background.x + drivenCarMove
+            firstCar.stop()
+            firstCar.x = firstCar.x - drivenCarMove
+            firstCar.xPrime = firstCar.xPrime - drivenCarMove
+            firstCar.move()
+        }
+        else if (background.x == stopRight) {
+            //Nothing to do
+        }
+        else if (nextMove > stopRight ) {
+            background.x = stopRight;
+            firstCar.stop()
+            firstCar.x = firstCar.x - (nextMove - stopRight)
+            firstCar.xPrime = firstCar.xPrime - (nextMove - stopRight)
+            firstCar.move()
+        }
+        console.log(background.x)
+    }
+
     MouseArea {
         anchors.fill: parent
         onClicked: firstCar.move();
     }
+
+
 }
