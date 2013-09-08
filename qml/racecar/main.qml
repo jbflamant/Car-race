@@ -37,10 +37,14 @@ Rectangle {
     property int startY: height / 16
     property int endY: height
 
-    property int drivenCarMove : 20
+    property int drivenCarMove : 100
 
-    property int stopRight: width - background.width
-    property int stopLeft: 0
+    property int stopRight: width - background.width * (1 - 0.1)
+    property int stopLeft: - background.width * 0.10
+
+    property int roadStepRotation: 100
+
+    property real roadEndRatio: 0.5
 
     id: main
     width: 1366
@@ -49,25 +53,29 @@ Rectangle {
     Rectangle {
         id: background
 
+        width: 2 * parent.width;
+        anchors.top: parent.top; anchors.bottom: parent.bottom
+        x: parent.width / 2 - width / 2
+
+        focus: true
+
         gradient: Gradient {
-            GradientStop {position: 1.0; color: Qt.rgba(0 , .68 , .92, 1) }
+            GradientStop {position: 1.0; color: "green" }
+            GradientStop {position: 0.51; color: "green" }
             GradientStop {position: 0.5; color: Qt.rgba(0 , .68 , .92, 1)}
             GradientStop {position: 0.0; color: Qt.rgba(.18 , .20 , .56, 1) }
         }
 
-        width: parent.width;
-        anchors.top: parent.top; anchors.bottom: parent.bottom
-        x: parent.width / 2 - width / 2
-        focus: true
         Image {
             id: bckgrdImage
 
             property int originX : width / 2
 
-            width: parent.width; height: parent.height;
+            width: parent.width / 2; height: parent.height;
+            x: parent.width / 2 - width / 2
             y: parent.height / 2
             smooth: true
-            transform: Rotation {origin.x: bckgrdImage.originX; origin.y: 0; axis {x: 1; y: 0; z: 0} angle: 80 }
+            transform: Rotation {id: backgroundRotation; origin.x: bckgrdImage.originX; origin.y: 0; axis {x: 1; y: 0; z: 0} angle: 85 }
             source: "qrc:/img/straight-highway-v2.svg"
         }
     }
@@ -109,9 +117,11 @@ Rectangle {
             car.x = car.x + drivenCarMove
             car.xPrime = car.xPrime + drivenCarMove
             car.move()
+            bckgrdImage.originX = bckgrdImage.originX - roadStepRotation;
         }
         else if (background.x == stopLeft) {
             //Nothing to do
+//            bckgrdImage.originX = 0;
         }
         else if (nextMove > stopLeft ) {
             background.x = stopLeft;
@@ -119,7 +129,10 @@ Rectangle {
             car.x = car.x + (stopLeft - nextMove)
             car.xPrime = car.xPrime + (stopLeft - nextMove)
             car.move()
+//            bckgrdImage.originX = 0;
         }
+        console.log("Key left")
+        console.log(background.x)
     }
 
     Keys.onRightPressed: {
@@ -130,9 +143,11 @@ Rectangle {
             car.x = car.x - drivenCarMove
             car.xPrime = car.xPrime - drivenCarMove
             car.move()
+            bckgrdImage.originX = bckgrdImage.originX + roadStepRotation;
         }
         else if (background.x == stopRight) {
             //Nothing to do
+//            bckgrdImage.originX = bckgrdImage.width;
         }
         else if (nextMove < stopRight ) {
             background.x = stopRight;
@@ -140,7 +155,10 @@ Rectangle {
             car.x = car.x - (nextMove - stopRight)
             car.xPrime = car.xPrime - (nextMove - stopRight)
             car.move()
+//            bckgrdImage.originX = bckgrdImage.width;
         }
+        console.log("Key right")
+        console.log(background.x)
     }
 
     MouseArea {
