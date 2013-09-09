@@ -42,9 +42,11 @@ Rectangle {
     property int stopRight: width - background.width * (1 - 0.1)
     property int stopLeft: - background.width * 0.10
 
-    property int roadStepRotation: 100
+    property int roadStepRotation: 85
 
     property real roadEndRatio: 0.5
+
+    property int roadSpeed: 3000
 
     id: main
     width: 1366
@@ -59,24 +61,55 @@ Rectangle {
 
         focus: true
 
-        gradient: Gradient {
-            GradientStop {position: 1.0; color: "green" }
-            GradientStop {position: 0.51; color: "green" }
-            GradientStop {position: 0.5; color: Qt.rgba(0 , .68 , .92, 1)}
-            GradientStop {position: 0.0; color: Qt.rgba(.18 , .20 , .56, 1) }
-        }
+        color: "green"
 
-        Image {
+        Rectangle {
             id: bckgrdImage
 
             property int originX : width / 2
+            property int originY : 100
 
-            width: parent.width / 2; height: parent.height;
+            width: parent.width / 2; height: 64 * parent.height;
             x: parent.width / 2 - width / 2
-            y: parent.height / 2
+            y: parent.height * .7
             smooth: true
-            transform: Rotation {id: backgroundRotation; origin.x: bckgrdImage.originX; origin.y: 0; axis {x: 1; y: 0; z: 0} angle: 85 }
-            source: "qrc:/img/straight-highway-v2.svg"
+            transform: Rotation {id: backgroundRotation; origin.x: bckgrdImage.originX; origin.y: bckgrdImage.originY; axis {x: 1; y: 0; z: 0} angle: 76 }
+            color: "transparent"
+
+            Image {
+                width: parent.width; height: parent.height
+                y: -2*parent.height
+                source: "qrc:/img/straight-highway-v2.svg"
+            }
+            Image {
+                width: parent.width; height: parent.height
+                y: -parent.height
+                source: "qrc:/img/straight-highway-v2.svg"
+            }
+
+            SequentialAnimation {
+                running: true
+                loops: Animation.Infinite
+                ParallelAnimation {
+                    NumberAnimation { target: bckgrdImage.children[0]; properties: "y"; to: -bckgrdImage.height; duration: roadSpeed }
+                    NumberAnimation { target: bckgrdImage.children[1]; properties: "y"; to: 0; duration: roadSpeed }
+                }
+                NumberAnimation { target: bckgrdImage.children[1]; properties: "y"; to: -2*bckgrdImage.height; duration: 0 }
+                ParallelAnimation {
+                    NumberAnimation { target: bckgrdImage.children[1]; properties: "y"; to: -bckgrdImage.height; duration: roadSpeed }
+                    NumberAnimation { target: bckgrdImage.children[0]; properties: "y"; to: 0; duration: roadSpeed }
+                }
+                NumberAnimation { target: bckgrdImage.children[0]; properties: "y"; to: -2*bckgrdImage.height; duration: 0 }
+            }
+        }
+
+        Rectangle {
+            width: parent.width; height: parent.height * .51
+            anchors.top: parent.top; anchors.left: parent.left; anchors.right: parent.right
+            gradient: Gradient {
+                GradientStop {position: 1.0; color: Qt.rgba(0 , .68 , .92, 1)}
+                GradientStop {position: 0.0; color: Qt.rgba(.18 , .20 , .56, 1) }
+            }
         }
     }
 
@@ -160,15 +193,5 @@ Rectangle {
         console.log("Key right")
         console.log(background.x)
     }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            car.move();
-            console.log(background.width)
-            console.log(background.children[0].width)
-        }
-    }
-
 
 }
