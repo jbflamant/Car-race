@@ -28,13 +28,13 @@ Rectangle {
     //endX2
     //----------------------------------------->
 
-    property int startX1: width / 16
-    property int endX1: width - width / 16
+    property int startX1: width * .45
+    property int endX1: width * .55
 
     property int startX2: 0
     property int endX2: width
 
-    property int startY: height / 16
+    property int startY: height * .6 - car.height
     property int endY: height
 
     property int drivenCarMove : 100
@@ -73,7 +73,7 @@ Rectangle {
             x: parent.width / 2 - width / 2
             y: parent.height * .7
             smooth: true
-            transform: Rotation {id: backgroundRotation; origin.x: bckgrdImage.originX; origin.y: bckgrdImage.originY; axis {x: 1; y: 0; z: 0} angle: 76 }
+            transform: Rotation {id: backgroundRotation; origin.x: bckgrdImage.originX; origin.y: bckgrdImage.originY; axis {x: 1; y: 0; z: 0} angle: 80 }
             color: "transparent"
 
             Image {
@@ -104,7 +104,7 @@ Rectangle {
         }
 
         Rectangle {
-            width: parent.width; height: parent.height * .51
+            width: parent.width; height: parent.height * .6
             anchors.top: parent.top; anchors.left: parent.left; anchors.right: parent.right
             gradient: Gradient {
                 GradientStop {position: 1.0; color: Qt.rgba(0 , .68 , .92, 1)}
@@ -128,10 +128,11 @@ Rectangle {
     Rectangle {
         id: drivenCar
         color: "blue"
-        width: parent.width
-        height: parent.height / 6
+        width: 2 * parent.width
+        height: 50
         anchors.bottom: parent.bottom
-        x: parent.width / 2 - width / 2
+        x: - width / 3
+        y: 1000
         radius: width / 2
     }
 
