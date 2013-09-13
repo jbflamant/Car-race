@@ -113,21 +113,6 @@ Rectangle {
         }
     }
 
-    Car {
-        id: car
-        color: "red"
-        offsetStartX1: startX1
-        offsetEndX1: endX1
-        offsetStartX2: startX2
-        offsetEndX2: endX2
-        offsetStartY: startY
-        offsetEndY: endY
-        carWidth: drivenCar.width * .1
-        width: parent.width / 200
-        height: width / 2
-        speed: 4000
-    }
-
     Rectangle {
         id: drivenCar
         color: "blue"
@@ -151,10 +136,6 @@ Rectangle {
         if(nextMove <= stopLeft) {
             background.x = background.x + drivenCarMove
             bckgrdImage.originX = bckgrdImage.originX - roadStepRotation;
-            car.stop()
-            car.x = car.x + drivenCarMove
-            car.xPrime = car.xPrime + drivenCarMove
-            car.move()
         }
         else if (background.x == stopLeft) {
             //Nothing to do
@@ -162,10 +143,6 @@ Rectangle {
         else if (nextMove > stopLeft ) {
             background.x = stopLeft;
             bckgrdImage.originX = bckgrdImage.originX - roadStepRotation * ((stopLeft - nextMove) / nextMove);
-            car.stop()
-            car.x = car.x + (stopLeft - nextMove)
-            car.xPrime = car.xPrime + (stopLeft - nextMove)
-            car.move()
         }
     }
 
@@ -174,10 +151,6 @@ Rectangle {
         if(nextMove >= stopRight) {
             background.x = background.x - drivenCarMove
             bckgrdImage.originX = bckgrdImage.originX + roadStepRotation;
-            car.stop()
-            car.x = car.x - drivenCarMove
-            car.xPrime = car.xPrime - drivenCarMove
-            car.move()
         }
         else if (background.x == stopRight) {
             //Nothing to do
@@ -186,15 +159,7 @@ Rectangle {
             console.log(((nextMove - stopRight) / stopRight))
             background.x = stopRight;
             bckgrdImage.originX = bckgrdImage.originX + roadStepRotation * (.6 - (nextMove - stopRight) / stopRight);
-            car.stop()
-            car.x = car.x - (nextMove - stopRight)
-            car.xPrime = car.xPrime - (nextMove - stopRight)
-            car.move()
         }
-        console.log("Key right")
-        console.log(background.x)
-        console.log(bckgrdImage.originX)
-        console.log((stopRight - nextMove) / nextMove)
     }
 
 }
