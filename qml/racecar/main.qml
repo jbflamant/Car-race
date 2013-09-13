@@ -88,22 +88,28 @@ Rectangle {
             }
 
             Rectangle {
-                id: newCarShadow
+                id: car
+
                 width: parent.width / 3
                 height: 500
-                color: "black"
-                opacity: .8
-
-                y: -2000
-            }
-
-            Rectangle {
-                id: newCar
-                width: parent.width / 3
-                height: 500
-                color: "red"
-
                 y: -3000
+
+                Rectangle {
+                    id: newCarShadow
+                    width: parent.width * .7
+                    height: parent.height
+                    color: "black"
+                    opacity: .8
+                    y: 1000
+                    x: newCar.width / 2
+                }
+
+                Rectangle {
+                    id: newCar
+                    width: parent.width
+                    height: parent.height
+                    color: "red"
+                }
             }
 
             SequentialAnimation {
