@@ -50,6 +50,8 @@ Rectangle {
 
     property bool isMoving: false
 
+    property int speed: 1000
+
     width: parent.width / 8
     height: parent.height / 8
     y: offsetStartY
@@ -80,9 +82,9 @@ Rectangle {
     ParallelAnimation {
         running: isMoving
         loops: 1
-        NumberAnimation { target: car; properties: 'x'; to: xPrime; duration: 1000 }
-        NumberAnimation { target: car; properties: 'y'; to: yPrime; duration: 1000 }
-//        NumberAnimation { target: car; properties: 'width'; to: carWidth; duration: 1000 }
+        NumberAnimation { target: car; properties: 'x'; to: xPrime; duration: speed }
+        NumberAnimation { target: car; properties: 'y'; to: yPrime; duration: speed }
+//        NumberAnimation { target: car; properties: 'width'; to: carWidth; duration: speed }
     }
 
 }

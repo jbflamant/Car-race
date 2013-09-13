@@ -28,8 +28,8 @@ Rectangle {
     //endX2
     //----------------------------------------->
 
-    property int startX1: width * .45
-    property int endX1: width * .55
+    property int startX1: width * .49
+    property int endX1: width * .51
 
     property int startX2: 0
     property int endX2: width
@@ -37,12 +37,12 @@ Rectangle {
     property int startY: height * .6 - car.height
     property int endY: height
 
-    property int drivenCarMove : 100
+    property int drivenCarMove : 99
 
-    property int stopRight: width - background.width * (1 - 0.05)
-    property int stopLeft: - background.width * 0.05
+    property int stopRight: width - background.width * (1 - 0.04)
+    property int stopLeft: - background.width * 0.04
 
-    property int roadStepRotation: 85
+    property int roadStepRotation: 95
 
     property real roadEndRatio: 0.5
 
@@ -87,31 +87,6 @@ Rectangle {
                 source: "qrc:/img/straight-highway-v2.svg"
             }
 
-            Rectangle {
-                id: car
-
-                width: parent.width / 3
-                height: 500
-                y: -3000
-
-                Rectangle {
-                    id: newCarShadow
-                    width: parent.width * .7
-                    height: parent.height
-                    color: "black"
-                    opacity: .8
-                    y: 1000
-                    x: newCar.width / 2
-                }
-
-                Rectangle {
-                    id: newCar
-                    width: parent.width
-                    height: parent.height
-                    color: "red"
-                }
-            }
-
             SequentialAnimation {
                 running: true
                 loops: Animation.Infinite
@@ -138,17 +113,20 @@ Rectangle {
         }
     }
 
-//    Car {
-//        id: car
-//        color: "red"
-//        offsetStartX1: startX1
-//        offsetEndX1: endX1
-//        offsetStartX2: startX2
-//        offsetEndX2: endX2
-//        offsetStartY: startY
-//        offsetEndY: endY
-//        carWidth: drivenCar.width
-//    }
+    Car {
+        id: car
+        color: "red"
+        offsetStartX1: startX1
+        offsetEndX1: endX1
+        offsetStartX2: startX2
+        offsetEndX2: endX2
+        offsetStartY: startY
+        offsetEndY: endY
+        carWidth: drivenCar.width * .1
+        width: parent.width / 200
+        height: width / 2
+        speed: 4000
+    }
 
     Rectangle {
         id: drivenCar
@@ -172,52 +150,51 @@ Rectangle {
         var nextMove = background.x + drivenCarMove;
         if(nextMove <= stopLeft) {
             background.x = background.x + drivenCarMove
-//            car.stop()
-//            car.x = car.x + drivenCarMove
-//            car.xPrime = car.xPrime + drivenCarMove
-//            car.move()
             bckgrdImage.originX = bckgrdImage.originX - roadStepRotation;
+            car.stop()
+            car.x = car.x + drivenCarMove
+            car.xPrime = car.xPrime + drivenCarMove
+            car.move()
         }
         else if (background.x == stopLeft) {
             //Nothing to do
-//            bckgrdImage.originX = 0;
         }
         else if (nextMove > stopLeft ) {
             background.x = stopLeft;
-//            car.stop()
-//            car.x = car.x + (stopLeft - nextMove)
-//            car.xPrime = car.xPrime + (stopLeft - nextMove)
-//            car.move()
-//            bckgrdImage.originX = 0;
+            bckgrdImage.originX = bckgrdImage.originX - roadStepRotation * ((stopLeft - nextMove) / nextMove);
+            car.stop()
+            car.x = car.x + (stopLeft - nextMove)
+            car.xPrime = car.xPrime + (stopLeft - nextMove)
+            car.move()
         }
-        console.log("Key left")
-        console.log(background.x)
     }
 
     Keys.onRightPressed: {
         var nextMove = background.x - drivenCarMove;
         if(nextMove >= stopRight) {
             background.x = background.x - drivenCarMove
-//            car.stop()
-//            car.x = car.x - drivenCarMove
-//            car.xPrime = car.xPrime - drivenCarMove
-//            car.move()
             bckgrdImage.originX = bckgrdImage.originX + roadStepRotation;
+            car.stop()
+            car.x = car.x - drivenCarMove
+            car.xPrime = car.xPrime - drivenCarMove
+            car.move()
         }
         else if (background.x == stopRight) {
             //Nothing to do
-//            bckgrdImage.originX = bckgrdImage.width;
         }
         else if (nextMove < stopRight ) {
+            console.log(((nextMove - stopRight) / stopRight))
             background.x = stopRight;
-//            car.stop()
-//            car.x = car.x - (nextMove - stopRight)
-//            car.xPrime = car.xPrime - (nextMove - stopRight)
-//            car.move()
-//            bckgrdImage.originX = bckgrdImage.width;
+            bckgrdImage.originX = bckgrdImage.originX + roadStepRotation * (.6 - (nextMove - stopRight) / stopRight);
+            car.stop()
+            car.x = car.x - (nextMove - stopRight)
+            car.xPrime = car.xPrime - (nextMove - stopRight)
+            car.move()
         }
         console.log("Key right")
         console.log(background.x)
+        console.log(bckgrdImage.originX)
+        console.log((stopRight - nextMove) / nextMove)
     }
 
 }
